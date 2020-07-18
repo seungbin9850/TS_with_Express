@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction, urlencoded } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { sequelize } from "./config/config";
 import morgan from "morgan";
 import router from "./routes"
