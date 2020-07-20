@@ -12,7 +12,6 @@ const write = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-    const token: any = req.headers["access-token"]
     await deleteOnePost(id);
     res.status(200).json({ message: "성공" });
 }
