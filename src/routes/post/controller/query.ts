@@ -14,4 +14,22 @@ const findUserByToken = async (accessToken: string): Promise<User> => {
     return user;
 }
 
-export { create, findUserByToken }
+const compareUser = async (username: string, postUsername: string): Promise<boolean> => {
+    return username === postUsername;
+}
+
+const findOne = async (id: string): Promise<Post> => {
+    const post: any = await Post.findOne({ where: { id } });
+    return post;
+}
+
+const deleteOnePost = async (id: string) => {
+    try {
+        const post: any = await findOne(id);
+        await post.destroy();
+    } catch (e) {
+        throw new Error("존재하지 않는 글");
+    }
+}
+
+export { create, findUserByToken, deleteOnePost, compareUser, findOne }
