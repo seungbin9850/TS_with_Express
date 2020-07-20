@@ -1,29 +1,32 @@
 import { Post } from "../../../models/post";
 import { User } from "../../../models/user";
+import uuid4 from "uuid4";
 
-const create = async (title: string, content: string, username: string) => {
+export const mkid = async (): Promise<string> => {
+    const id = await uuid4().split("-");
+    return id[2] + id[1] + id[0] + id[3] + id[4]
+} 
+
+export const create = async (id: string, title: string, content: string, username: string) => {
     return await Post.create({ 
+        id,
         title, 
         content, 
         username 
     });
 }
 
-const findUserByToken = async (accessToken: string): Promise<User> => {
+export const findUserByToken = async (accessToken: string): Promise<User> => {
     const user: any = await User.findOne({ where: { accessToken } });
     return user;
 }
 
-const compareUser = async (username: string, postUsername: string): Promise<boolean> => {
-    return username === postUsername;
-}
-
-const findOne = async (id: string): Promise<Post> => {
+export const findOne = async (id: string): Promise<Post> => {
     const post: any = await Post.findOne({ where: { id } });
     return post;
 }
 
-const deleteOnePost = async (id: string) => {
+export const deleteOnePost = async (id: string) => {
     try {
         const post: any = await findOne(id);
         await post.destroy();
@@ -31,5 +34,3 @@ const deleteOnePost = async (id: string) => {
         throw new Error("존재하지 않는 글");
     }
 }
-
-export { create, findUserByToken, deleteOnePost, compareUser, findOne }
