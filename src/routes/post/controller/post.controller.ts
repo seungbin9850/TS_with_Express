@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { create, findUserByToken } from "./query";
+import { create, findUserByToken, deleteOnePost } from "./query";
 
 const write = async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
@@ -10,4 +10,11 @@ const write = async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ message: "성공" });
 }
 
-export { write };
+const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const token: any = req.headers["access-token"]
+    await deleteOnePost(id);
+    res.status(200).json({ message: "성공" });
+}
+
+export { write, deleteOne };
