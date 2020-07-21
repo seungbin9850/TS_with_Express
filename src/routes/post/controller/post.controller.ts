@@ -20,3 +20,16 @@ export const deleteOne = async (req: Request, res: Response, next: NextFunction)
     await query.deleteOnePost(id);
     res.status(200).json({ message: "성공" });
 }
+
+export const updateOne = async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const { title, content } = req.body;
+    const username = req["decoded"].username;
+    const post: any = await query.findOne(id);
+    if (username != post.username) throw new Error("자신의 글이 아님");
+    if (!post) throw new Error("존재하지 않는 글");
+    if (title) post.title = title;
+    if (content) post.content = content;
+    post.save();
+    res.status(200).json({ message: "성공" });
+}
