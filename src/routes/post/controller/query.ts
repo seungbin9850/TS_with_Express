@@ -26,6 +26,11 @@ export const findOne = async (id: string): Promise<Post> => {
     return post;
 }
 
+export const findAll = async (): Promise<Post> => {
+    const post: any = await Post.findAll();
+    return post;
+}
+
 export const deleteOnePost = async (id: string) => {
     try {
         const post: any = await findOne(id);
