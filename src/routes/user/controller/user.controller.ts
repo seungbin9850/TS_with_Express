@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { findOneByUsername, createUser, passwordCompare, passwordHashing } from "./query";
+import { findOneByUsername, createUser, passwordCompare, passwordHashing, findOneByRefresh } from "./query";
 import { mkAccess, mkRefresh } from "./mkToken";
 
 
-const signUp = async (req: Request, res: Response, next: NextFunction) => {
+export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     const { name, username, password } = req.body;
     const hashedPassword = await passwordHashing(password);
     if (await findOneByUsername(username)) throw new Error("이미 있는 아이디");
@@ -11,7 +11,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ message: "회원가입 성공" });
 };
 
-const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
     const user = await findOneByUsername(username);
 
@@ -29,4 +29,14 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     });
 }
 
-export { signUp, login }
+export const refresh = async (req: Request, res: Response, next: NextFunction) => {
+    const refresh: any = req.headers["refresh-token"]
+    const user: any = await findOneByRefresh(refresh);
+    const accessToken = await mkAccess(req, user);
+    user.accessToken = accessToken;
+    user.save();
+    res.status(200).json({
+        message: "성공",
+        accessToken
+    })
+}
