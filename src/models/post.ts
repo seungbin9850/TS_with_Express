@@ -18,6 +18,9 @@ Post.init (
         },
         content: {
             type: Sequelize.STRING,
+        },
+        file: {
+            type: Sequelize.STRING,
         }
     }, {
         sequelize,
