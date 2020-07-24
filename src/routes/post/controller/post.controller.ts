@@ -3,11 +3,12 @@ import * as query from "./query";
 
 export const write = async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
+    const file = req.file.filename;
     const token: any = req.headers["access-token"];
-    const user: any = await query.findUserByToken(token)
+    const user: any = await query.findUserByToken(token);
     const id: any = await query.mkid();
     if (!user) throw new Error("존재하지 않는 유저");
-    await query.create(id, title, content, user.username);
+    await query.create(id, title, content, user.username, file);
     res.status(200).json({ message: "성공" });
 }
 
