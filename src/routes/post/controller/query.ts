@@ -7,12 +7,13 @@ export const mkid = async (): Promise<string> => {
     return id[2] + id[1] + id[0] + id[3] + id[4]
 } 
 
-export const create = async (id: string, title: string, content: string, username: string) => {
+export const create = async (id: string, title: string, content: string, username: string, file: string) => {
     return await Post.create({ 
         id,
         title, 
         content, 
-        username 
+        username,
+        file
     });
 }
 
