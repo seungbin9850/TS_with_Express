@@ -32,11 +32,20 @@ export const findAll = async (): Promise<Post> => {
     return post;
 }
 
+export const updateOnePost = async (id: string, title: string, content: string, file: string) => {
+    try {
+        const post: any = await findOne(id);
+        await post.update(title, content, file);
+    } catch (e) {
+        throw e;
+    }
+}
+
 export const deleteOnePost = async (id: string) => {
     try {
         const post: any = await findOne(id);
         await post.destroy();
     } catch (e) {
-        throw new Error("존재하지 않는 글");
+        throw e;
     }
 }
