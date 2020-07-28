@@ -6,7 +6,7 @@ export const write = async (req: Request, res: Response, next: NextFunction) => 
     const file = req.file.filename;
     const token: any = req.headers["access-token"];
     const user: any = await query.findUserByToken(token);
-    const id: any = await query.mkid();
+    const id: string = await query.mkid();
     if (!user) throw new Error("존재하지 않는 유저");
     await query.create(id, title, content, user.username, file);
     res.status(200).json({ message: "성공" });
@@ -16,7 +16,6 @@ export const deleteOne = async (req: Request, res: Response, next: NextFunction)
     const id = req.params.id;
     const username = req["decoded"].username;
     const post: any = await query.findOne(id);
-    if (!post) throw new Error("존재하지 않는 글");
     if (username !== post.username) throw new Error("자신의 글이 아님")
     await query.deleteOnePost(id);
     res.status(200).json({ message: "성공" });
@@ -27,12 +26,8 @@ export const updateOne = async (req: Request, res: Response, next: NextFunction)
     const { title, content, file } = req.body;
     const username = req["decoded"].username;
     const post: any = await query.findOne(id);
-    if (username != post.username) throw new Error("자신의 글이 아님");
-    if (!post) throw new Error("존재하지 않는 글");
-    if (title) post.title = title;
-    if (content) post.content = content;
-    if (file) post.file = file;
-    post.save();
+    if (username !== post.username) throw new Error("자신의 글이 아님");
+    await query.updateOnePost(id, title, content, file);
     res.status(200).json({ message: "성공" });
 }
 
