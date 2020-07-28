@@ -3,7 +3,8 @@ import * as query from "./query";
 
 export const write = async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
-    const file = req.file.filename;
+    const file = req.file["key"];
+    console.log(req.file);
     const token: any = req.headers["access-token"];
     const user: any = await query.findUserByToken(token);
     const id: string = await query.mkid();
