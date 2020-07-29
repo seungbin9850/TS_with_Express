@@ -6,8 +6,9 @@ import { mkAccess, mkRefresh } from "./mkToken";
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     const { name, username, password } = req.body;
     const hashedPassword = await query.passwordHashing(password);
+    const id: string = await query.mkid();
     if (await query.findOneByUsername(username)) throw new Error("이미 있는 아이디");
-    await query.createUser(name, username, hashedPassword);
+    await query.createUser(id, name, username, hashedPassword);
     res.status(200).json({ message: "회원가입 성공" });
 };
 
