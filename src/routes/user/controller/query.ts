@@ -1,5 +1,11 @@
 import { User } from "../../../models/user";
 import bcrypt from "bcrypt-nodejs";
+import uuid4 from "uuid4";
+
+export const mkid = async (): Promise<string> => {
+    const id = await uuid4().split("-");
+    return id[2] + id[1] + id[0] + id[3] + id[4]
+} 
 
 export const passwordHashing = async (password: string): Promise<string> => {
     return bcrypt.hashSync(password);
@@ -23,8 +29,9 @@ export const findOneByUsername = async (username: string): Promise<User> => {
     }
 }
 
-export const createUser = async (name: string, username: string, password: string) => {
+export const createUser = async (id: string, name: string, username: string, password: string) => {
     await User.create({
+        id,
         name,
         username,
         password
