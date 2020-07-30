@@ -8,7 +8,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 const s3 = new aws.S3({
     accessKeyId: process.env.S3_ACCESS,
     secretAccessKey: process.env.S3_SECRET,
-    region: "ap-northeast-2"
+    region: process.env.S3_REGION
 });
 
 export const uploadMiddleware = multer({
@@ -20,5 +20,5 @@ export const uploadMiddleware = multer({
             cb(null, Date.now().toString() + extention);
         },
         acl: "public-read-write"
-    }) 
+    })
 })
