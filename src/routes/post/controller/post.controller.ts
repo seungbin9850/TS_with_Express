@@ -18,17 +18,17 @@ export const deleteOne = async (req: Request, res: Response, next: NextFunction)
     const post: any = await query.findOne(id);
     if (userId !== post.userId) throw new Error("자신의 글이 아님")
     await query.deleteOnePost(id);
-
     res.status(200).json({ message: "성공" });
 }
 
 export const updateOne = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-    const { title, content, file } = req.body;
+    const { title, content } = req.body;
+    const file = req.file["key"];
     const userId = req["decoded"].id;
     const post: any = await query.findOne(id);
-    if (userId !== post.username) throw new Error("자신의 글이 아님");
-    await query.updateOnePost(id, title, content, file);
+    if (userId !== post.userId) throw new Error("자신의 글이 아님");
+    await query.updateOnePost(post, title, content, file);
     res.status(200).json({ message: "성공" });
 }
 
