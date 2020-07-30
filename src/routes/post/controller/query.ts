@@ -42,10 +42,23 @@ export const findAll = async (): Promise<Post> => {
     return post;
 }
 
-export const updateOnePost = async (id: string, title: string, content: string, file: string) => {
+const deleteS3 = async (post: any) => {
+    const params = {
+        Bucket: process.env.S3_NAME || "",
+        Key: post.file,
+    }
+    await s3.deleteObject(params, (err, data) => {
+        if (err) throw new Error(err.message);
+    })
+}
+
+export const updateOnePost = async (post: any, title: string, content: string, file: string) => {
     try {
-        const post: any = await findOne(id);
-        await post.update(title, content, file);
+        await deleteS3(post);
+        post.title = title;
+        post.content = content;
+        post.file = file;
+        await post.save();
     } catch (e) {
         throw e;
     }
@@ -54,13 +67,7 @@ export const updateOnePost = async (id: string, title: string, content: string, 
 export const deleteOnePost = async (id: string) => {
     try {
         const post: any = await findOne(id);
-        const params = {
-            Bucket: process.env.S3_NAME || "",
-            Key: post.file,
-        }
-        await s3.deleteObject(params, (err, data) => {
-            if (err) throw new Error(err.message);
-        })
+        await deleteS3(post);
         await post.destroy();
     } catch (e) {
         throw e;
