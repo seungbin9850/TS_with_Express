@@ -17,7 +17,7 @@ export const deleteOne = async (req: Request, res: Response, next: NextFunction)
     const userId = req["decoded"].id;
     const post: any = await query.findOne(id);
     if (userId !== post.userId) throw new Error("자신의 글이 아님")
-    await query.deleteOnePost(id);
+    await query.deleteOnePost(post);
     res.status(200).json({ message: "성공" });
 }
 
