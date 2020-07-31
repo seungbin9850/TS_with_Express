@@ -64,9 +64,8 @@ export const updateOnePost = async (post: any, title: string, content: string, f
     }
 }
 
-export const deleteOnePost = async (id: string) => {
+export const deleteOnePost = async (post: any) => {
     try {
-        const post: any = await findOne(id);
         await deleteS3(post);
         await post.destroy();
     } catch (e) {
