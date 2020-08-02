@@ -46,3 +46,13 @@ export const findOneByRefresh = async (refreshToken: string): Promise<User> => {
         throw e;
     }
 }
+
+export const change = async (id: string, password: string) => {
+    try {
+        const user: any = await findOne(id);
+        user.password = password;
+        user.save();
+    } catch (e) {
+        throw e;
+    }
+}
