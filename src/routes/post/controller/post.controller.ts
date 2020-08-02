@@ -44,7 +44,6 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
     const post: any = await query.findAll();
-    if (!post) throw new Error("존재하지 않는 글");
     res.status(200).json({
         message: "성공",
         post
