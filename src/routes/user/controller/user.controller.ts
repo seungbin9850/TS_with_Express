@@ -41,3 +41,12 @@ export const refresh = async (req: Request, res: Response, next: NextFunction) =
         accessToken
     })
 }
+
+export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+    const id = req["decoded"].id;
+    const password = req.body.password;
+    await query.change(id, password);
+    res.status(200).json({
+        message: "성공"
+    })
+}
