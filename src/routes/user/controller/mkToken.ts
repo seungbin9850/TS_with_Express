@@ -1,7 +1,7 @@
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 
-const mkAccess = async (req: Request, user: object): Promise<string> => {
+export const mkAccess = async (req: Request, user: object): Promise<string> => {
     const secret = req.app.get('jwt-secret');
     const token: string = await jwt.sign({
         id: user['id'],
@@ -12,7 +12,7 @@ const mkAccess = async (req: Request, user: object): Promise<string> => {
     return token;
 }
 
-const mkRefresh = async (req: Request, user: object): Promise<string> => {
+export const mkRefresh = async (req: Request, user: object): Promise<string> => {
     const secret = req.app.get('refresh-secret');
     const token: string = await jwt.sign({
         id: user['id'],
@@ -23,5 +23,3 @@ const mkRefresh = async (req: Request, user: object): Promise<string> => {
     });
     return token;
 }
-
-export { mkAccess, mkRefresh };
