@@ -15,14 +15,9 @@ export const passwordCompare = async (password: string, real: string): Promise<b
     return await bcrypt.compareSync(password, real);
 }
 
-const findOne = async (username: string): Promise<User> => {
-    const user: any = await User.findOne({ where: { username } });
-    return user;
-}
-
-export const findOneByUsername = async (username: string): Promise<User> => {
+export const findOne = async (username: string): Promise<User> => {
     try {
-        const user: any = await findOne(username);
+        const user: any = await User.findOne({ where: { username } });
         return user;
     } catch (e) {
         throw e;
@@ -47,9 +42,9 @@ export const findOneByRefresh = async (refreshToken: string): Promise<User> => {
     }
 }
 
-export const change = async (id: string, password: string) => {
+export const change = async (username: string, password: string) => {
     try {
-        const user: any = await findOne(id);
+        const user: any = await findOne(username);
         user.password = password;
         user.save();
     } catch (e) {
