@@ -9,5 +9,6 @@ router.post('/register', tryCatchMiddleware.Conflict(User.signUp));
 router.post('/login', tryCatchMiddleware.NotFound(User.login));
 router.get('/refresh', refreshMiddleware, tryCatchMiddleware.NotFound(User.refresh));
 router.put('/change', authMiddleware, tryCatchMiddleware.NotFound(User.changePassword));
+router.delete('/', authMiddleware, tryCatchMiddleware.NotFound(User.secessionUser));
 
 export default router;
