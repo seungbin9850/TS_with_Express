@@ -49,3 +49,9 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
         message: "성공"
     })
 }
+
+export const secessionUser = async (req: Request, res: Response, next: NextFunction) => {
+    const user = await query.findOne(req['decoded'].username);
+    await user.destroy();
+    res.status(200).json({ message: "성공" });
+}
