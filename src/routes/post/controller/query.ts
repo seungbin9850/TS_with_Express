@@ -38,7 +38,7 @@ export const findOne = async (id: string): Promise<Post> => {
 }
 
 export const findAll = async (): Promise<Post> => {
-    const post: any = await Post.findAll({ attributes: ["title"] });
+    const post: any = await Post.findAll({ attributes: ["id", "title"] });
     return post;
 }
 
