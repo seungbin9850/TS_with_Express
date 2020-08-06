@@ -19,7 +19,7 @@ export const mkRefresh = async (req: Request, user: object): Promise<string> => 
         username: user['username'],
         refresh: true
     }, secret, {
-        expiresIn: '30m'
+        expiresIn: '7d'
     });
     return token;
 }
