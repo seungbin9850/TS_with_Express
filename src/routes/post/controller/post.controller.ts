@@ -43,7 +43,8 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
-    const post: any = await query.findAll();
+    const page = req.params.page;
+    const post: any = await query.findAll(page);
     res.status(200).json({
         message: "성공",
         post
