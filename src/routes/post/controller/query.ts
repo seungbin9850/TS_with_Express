@@ -27,8 +27,8 @@ export const create = async (id: string, title: string, content: string, userId:
     });
 }
 
-export const findUserByToken = async (accessToken: string): Promise<User> => {
-    const user: any = await User.findOne({ where: { accessToken } });
+export const findUserById = async (id: string): Promise<User> => {
+    const user: any = await User.findOne({ where: { id } });
     return user;
 }
 
