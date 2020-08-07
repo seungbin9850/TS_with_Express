@@ -10,7 +10,7 @@ const accessToken = auth.authMiddleware;
 router.post('/', accessToken, uploadMiddleware.single('file'), tryCatchMiddleware.NotFound(post.write));
 router.delete('/:id', accessToken, tryCatchMiddleware.NotFound(post.deleteOne));
 router.put('/:id', accessToken, uploadMiddleware.single('file'), tryCatchMiddleware.NotFound(post.updateOne));
-router.get('/', tryCatchMiddleware.NotFound(post.getAll));
+router.get('/:page', tryCatchMiddleware.NotFound(post.getAll));
 router.get('/:id', tryCatchMiddleware.NotFound(post.getOne));
 
 export default router;
