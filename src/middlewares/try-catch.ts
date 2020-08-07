@@ -5,7 +5,7 @@ interface handlerFunc {
 }
 
 export class tryCatchMiddleware {
-    static NotFound = (cb: handlerFunc): handlerFunc => {
+    static NotFound = (cb: handlerFunc) => {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 await cb(req, res, next);
@@ -16,7 +16,7 @@ export class tryCatchMiddleware {
             }
         }
     }
-    static Conflict = (cb: handlerFunc): handlerFunc => {
+    static Conflict = (cb: handlerFunc) => {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 await cb(req, res, next);
@@ -27,7 +27,7 @@ export class tryCatchMiddleware {
             }
         }
     }
-    static ServerError = (cb: handlerFunc): handlerFunc => {
+    static ServerError = (cb: handlerFunc) => {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 await cb(req, res, next);
