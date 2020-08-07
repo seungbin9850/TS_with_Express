@@ -4,8 +4,8 @@ import * as query from "./query";
 export const write = async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
     const file = req.file["key"];
-    const token: any = req.headers["access-token"];
-    const user: any = await query.findUserByToken(token);
+    const userId: any = req["decoded"].id;
+    const user: any = await query.findUserById(userId);
     const id: string = await query.mkid();
     if (!user) throw new Error("존재하지 않는 유저");
     await query.create(id, title, content, user.id, file);
