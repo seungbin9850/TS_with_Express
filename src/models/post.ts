@@ -11,7 +11,8 @@ Post.init (
     {
         id: {
             type: Sequelize.STRING,
-            primaryKey: true
+            allowNull: false,
+            primaryKey: true 
         },
         title: {
             type: Sequelize.STRING,
