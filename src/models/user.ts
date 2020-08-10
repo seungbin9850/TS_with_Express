@@ -12,6 +12,11 @@ export class User extends Model {
 
 User.init (
     {
+        id: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            primaryKey: true
+        }
         name: {
             type: Sequelize.STRING,
             allowNull: false,
