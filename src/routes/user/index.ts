@@ -1,5 +1,6 @@
 import express from "express";
 import * as User from "./controller/user.controller";
+import * as Follow from "./controller/follow.controller";
 import { tryCatchMiddleware } from "../../middlewares/try-catch";
 import { authMiddleware, refreshMiddleware } from "../../middlewares/auth";
 
@@ -21,6 +22,11 @@ router.delete(
   "/",
   authMiddleware,
   tryCatchMiddleware.NotFound(User.secessionUser)
+);
+router.post(
+  "/follow/:id",
+  authMiddleware,
+  tryCatchMiddleware.NotFound(Follow.Follow)
 );
 
 export default router;
