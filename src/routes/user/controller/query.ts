@@ -27,6 +27,15 @@ export const findOne = async (username: string): Promise<User> => {
   }
 };
 
+export const findOneById = async (id: string): Promise<User> => {
+  try {
+    const user: any = await User.findOne({ where: { id } });
+    return user;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const createUser = async (
   id: string,
   name: string,
@@ -58,4 +67,9 @@ export const change = async (username: string, password: string) => {
   } catch (e) {
     throw e;
   }
+};
+
+export const Following = async (followerId: string, followingId: string) => {
+  const user: any = await findOneById(followerId);
+  await user.addFollowing(followingId);
 };
