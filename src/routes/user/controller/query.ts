@@ -1,4 +1,5 @@
 import { User } from "../../../models/user";
+import { Follow } from "../../../models/follow";
 import bcrypt from "bcrypt-nodejs";
 import uuid4 from "uuid4";
 
@@ -70,6 +71,5 @@ export const change = async (username: string, password: string) => {
 };
 
 export const Following = async (followerId: string, followingId: string) => {
-  const user: any = await findOneById(followerId);
-  await user.addFollowing(followingId);
+  await Follow.create({ followerId, followingId });
 };
