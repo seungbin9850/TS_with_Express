@@ -45,13 +45,3 @@ User.init(
 
 User.hasMany(Post, { foreignKey: "userId", sourceKey: "username" });
 Post.belongsTo(User, { foreignKey: "userId" });
-User.belongsToMany(User, {
-  foreignKey: "followingId",
-  as: "Followers",
-  through: "Follow",
-});
-User.belongsToMany(User, {
-  foreignKey: "followerId",
-  as: "Followings",
-  through: "Follow",
-});
