@@ -23,7 +23,7 @@ router.delete(
   authMiddleware,
   tryCatchMiddleware.NotFound(User.secessionUser)
 );
-router.post(
+router.get(
   "/follow/:id",
   authMiddleware,
   tryCatchMiddleware.NotFound(Follow.Follow)
